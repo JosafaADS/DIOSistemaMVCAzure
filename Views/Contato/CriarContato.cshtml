@@ -1,0 +1,36 @@
+@model SistemaMVC.ViewModels.AgendaTarefasViewModel
+
+@{
+    ViewData["Title"] = "Criar Contato";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <h1 class="display-4">Agenda de Contato</h1>
+    <p>Escolha uma pessoa para associar a este contato.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CriarContato">
+            <div class="form-group">
+                <label asp-for="Contato.PessoaId" class="control-label">Pessoa</label>
+                <select asp-for="Contato.PessoaId" class="form-control" asp-items="@(new SelectList(Model.Pessoas, "Id", "Nome"))">
+                    <option value="">-- Selecione uma Pessoa --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contato.Ativo" class="control-label">Ativo</label>
+                <input type="checkbox" asp-for="Contato.Ativo" class="form-check-input"/>
+            </div>
+            <br />
+            <div class="form-group">
+                
+                <input type="submit" value="Enviar" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+    <div class="form-group">
+        <a asp-action="Index">Voltar</a>
+    </div>
+</div>

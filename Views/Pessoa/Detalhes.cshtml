@@ -1,0 +1,91 @@
+@model SistemaMVC.Models.Pessoa
+@{
+    ViewData["Title"] = "Detalhes da Pessoa";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle display-1 text-primary"></i>
+                    </div>
+                    <h2 class="card-title">@Model.Nome @Model.Sobrenome</h2>
+                    <p class="text-muted"><i class="bi bi-envelope"></i> @Model.Email</p>
+                    <p class="text-muted"><i class="bi bi-telephone"></i> @Model.Telefone</p>
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">📍 Endereços</h5>
+                    <a asp-controller="Endereco" asp-action="Criar" asp-route-pessoaId="@Model.Id" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-plus-lg"></i> Novo
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model.Enderecos != null && Model.Enderecos.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var end in Model.Enderecos)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>@end.Rua, @end.Numero</strong><br>
+                                        <small class="text-muted">@end.Bairro, @end.Cidade - @end.Estado</small>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a asp-controller="Endereco" asp-action="Editar" asp-route-id="@end.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                                        <a asp-controller="Endereco" asp-action="Excluir" asp-route-id="@end.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('Excluir este endereço?')">Excluir</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-4">Nenhum endereço cadastrado.</p>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">📞 Contatos na Agenda</h5>
+                    <a asp-controller="Contato" asp-action="CriarContato" asp-route-pessoaId="@Model.Id" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-plus-lg"></i> Novo
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model.Contatos != null && Model.Contatos.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var c in Model.Contatos)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Status: @(c.Ativo ? "Ativo" : "Inativo")</span>
+                                    <div class="btn-group">
+                                        <a asp-controller="Contato" asp-action="AtualizarContato" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                                        <a asp-controller="Contato" asp-action="ExcluirContato" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('Excluir este contato?')">Excluir</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-4">Nenhum contato ativo na agenda.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

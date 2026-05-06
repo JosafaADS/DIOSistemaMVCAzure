@@ -1,0 +1,35 @@
+@model SistemaMVC.Models.Contato
+
+@{
+    ViewData["Title"] = "Detalhes do Contato";
+}
+
+<h2>🔎 Detalhes do Contato</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Id</th>
+        <td>@Model.Id</td>
+    </tr>
+
+    <tr>
+        <th>Nome</th>
+        <td>@Model.Pessoa?.Nome</td>
+    </tr>
+
+    <tr>
+        <th>Telefone</th>
+        <td>@Model.Pessoa?.Telefone</td>
+    </tr>
+
+    <tr>
+        <th>Ativo</th>
+        <td>@Model.Ativo</td>
+    </tr>
+
+</table>
+
+<a asp-action="ListarContatos" class="btn btn-secondary">
+    ⬅ Voltar
+</a>

@@ -1,0 +1,110 @@
+
+@model IEnumerable<SistemaMVC.Models.Contato>
+@{
+    ViewData["Title"] = "Listar Contatos";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <h1 class="display-4">Agenda de Contato</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Telefone
+            </th>
+            <th>
+                Ativo
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model){
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    <button type="button" class="btn btn-link p-0 fw-bold" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
+                        @item.Pessoa?.Nome
+                    </button>
+                </td>
+                <td>
+                    @item.Pessoa?.Telefone
+                </td>
+                <td>
+                    <span class="badge @(item.Ativo ? "bg-success" : "bg-secondary")">
+                        @(item.Ativo ? "Ativo" : "Inativo")
+                    </span>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a asp-action="AtualizarContato" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">Ver Tudo</button>
+                        <a asp-action="ExcluirContato" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('Excluir este contato?')">Excluir</a>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Modal de Detalhes -->
+            <div class="modal fade" id="modal-@item.Id" tabindex="-1" aria-labelledby="modalLabel-@item.Id" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title" id="modalLabel-@item.Id">👤 Detalhes de @item.Pessoa?.Nome</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><b>Informações Pessoais</b></h6>
+                                    <p><b>Nome:</b> @item.Pessoa?.Nome @item.Pessoa?.Sobrenome</p>
+                                    <p><b>Email:</b> @item.Pessoa?.Email</p>
+                                    <p><b>Telefone:</b> @item.Pessoa?.Telefone</p>
+                                    <a asp-controller="Pessoa" asp-action="Editar" asp-route-id="@item.PessoaId" class="btn btn-sm btn-primary">Editar Pessoa</a>
+                                    <a asp-controller="Pessoa" asp-action="Detalhes" asp-route-id="@item.PessoaId" class="btn btn-sm btn-outline-secondary">Perfil Completo</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><b>📍 Endereços</b></h6>
+                                    @if (item.Pessoa?.Enderecos != null && item.Pessoa.Enderecos.Any())
+                                    {
+                                        <ul class="list-group list-group-flush small">
+                                            @foreach (var end in item.Pessoa.Enderecos)
+                                            {
+                                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                    <span>@end.Rua, @end.Numero - @end.Cidade</span>
+                                                    <a asp-controller="Endereco" asp-action="Editar" asp-route-id="@end.Id" class="btn btn-xs btn-link text-decoration-none">✏️</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted italic">Nenhum endereço cadastrado.</p>
+                                    }
+                                    <hr />
+                                    <a asp-controller="Endereco" asp-action="Criar" asp-route-pessoaId="@item.PessoaId" class="btn btn-sm btn-success w-100">+ Novo Endereço</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Contato";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <h1 class="display-4">Bem vindo ao Sistema Agenda de Contato</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<br /><br /><br />
+<div>
+    <h3>
+    <!-- MENU CONTATOS SIMPLES -->
+<li class="nav-item">
+    <a class="nav-link text-dark"
+       asp-controller="Contato"
+       asp-action="Index">
+        👤 Início Contatos
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-dark"
+       asp-controller="Contato"
+       asp-action="ListarContatos">
+        📋 Listar Contatos
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-dark"
+       asp-controller="Contato"
+       asp-action="CriarContato">
+        ➕ Adicionar Contato
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-dark"
+       asp-controller="Contato"
+       asp-action="BuscarContato">
+        🔎 Buscar Contato
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-dark"
+       asp-controller="Contato"
+       asp-action="AtualizarContato">
+        ✏️ Editar Contato
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-danger"
+       asp-controller="Contato"
+       asp-action="ExcluirContato">
+        🗑️ Excluir Contato
+    </a>
+</li>
+</h3>
+</div>
